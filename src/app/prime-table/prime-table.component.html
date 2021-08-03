@@ -11,9 +11,8 @@
     </ng-template>
     <ng-template pTemplate="body" let-product let-expanded="expanded">
         <tr>
-            <td>{{product?.name}}</td>
             <td>
-                <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                <span>{{product?.name}}</span> <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain drop-down-btn" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
             </td>
         </tr>
     </ng-template>
@@ -67,7 +66,7 @@
                                   </p-cellEditor>
                                 </td>
                                 <td style="width: 16.7%;">
-                                  <button *ngIf="!editing" pButton pRipple type="button" class="p-button-rounded" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(product)" class="p-button-rounded p-button-text"></button>
+                                  <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" class="p-button-rounded p-button-success edit-btn" (click)="onRowEditInit(product)"></button>
                                   <button *ngIf="!editing" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(order, product)"></button>
                                   <button *ngIf="editing" pButton pRipple type="button" class="p-button-rounded" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(product)" class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
                                   <button *ngIf="editing" pButton pRipple type="button" class="p-button-rounded" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(product, ri)" class="p-button-rounded p-button-text p-button-danger"></button>

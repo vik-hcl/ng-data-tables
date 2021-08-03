@@ -1,0 +1,14 @@
+:host ::ng-deep {
+    .p-datatable .p-datatable-tbody > tr > td {
+        border: 0;   
+    }
+    .p-datatable .p-datatable-tbody > tr {
+        border: 1px solid #e9ecef;
+    }
+    .edit-btn {
+        margin-right: 10px;
+    }
+    .drop-down-btn {
+        vertical-align: baseline;
+    }
+}
