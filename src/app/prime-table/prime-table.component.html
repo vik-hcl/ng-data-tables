@@ -1,0 +1,88 @@
+<p-table [value]="products" dataKey="name">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 16.6%;" pSortableColumn="name">Vehicle Name <p-sortIcon field="name"></p-sortIcon></th>
+            <th style="width: 16.6%;">Product Id</th>
+            <th style="width: 16.6%;" pSortableColumn="customer">Customer<p-sortIcon field="customer"></p-sortIcon></th>
+            <th style="width: 16.6%;" pSortableColumn="amount">Amount<p-sortIcon field="amount"></p-sortIcon></th>
+            <th style="width: 16.6%;" pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
+            <th style="width: 16.6%;">Action</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product let-expanded="expanded">
+        <tr>
+            <td>{{product?.name}}</td>
+            <td>
+                <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-product>
+        <tr>
+            <td colspan="12">
+                <div class="p-p-3">
+                    <p-table [value]="product.orders" dataKey="id" editMode="row">
+                        <ng-template pTemplate="body" let-order let-editing="editing" let-ri="rowIndex">
+                            <tr  [pEditableRow]="order">
+                                <td style="width: 16.7%;"></td>
+                                <td style="width: 16.7%;" >
+                                  <p-cellEditor>
+                                      <ng-template pTemplate="input">
+                                        <p-inputNumber mode="decimal" [(ngModel)]="order.id"></p-inputNumber>
+                                      </ng-template>
+                                      <ng-template pTemplate="output">
+                                          {{order.id}}
+                                      </ng-template>
+                                  </p-cellEditor>
+                                </td>
+                                <td style="width: 16.7%;">
+                                  <p-cellEditor>
+                                      <ng-template pTemplate="input">
+                                          <input pInputText type="text" [(ngModel)]="order.customer">
+                                      </ng-template>
+                                      <ng-template pTemplate="output">
+                                          {{order.customer}}
+                                      </ng-template>
+                                  </p-cellEditor>
+                                </td>
+                                <td style="width: 16.7%;">
+                                  <p-cellEditor>
+                                      <ng-template pTemplate="input">
+                                        <p-inputNumber mode="decimal" [(ngModel)]="order.amount"></p-inputNumber>
+                                      </ng-template>
+                                      <ng-template pTemplate="output">
+                                          {{order.amount}}
+                                      </ng-template>
+                                  </p-cellEditor>
+                                </td>
+                                <td style="width: 16.7%;">
+                                  <p-cellEditor>
+                                      <ng-template pTemplate="input">
+                                          <p-dropdown [options]="allStatus" [(ngModel)]="order.status" optionLabel="name" optionValue="value"></p-dropdown>
+                                      </ng-template>
+                                      <ng-template pTemplate="output">
+                                          {{order.status}}
+                                          <span [class]="'order-badge order-' + order.status.toLowerCase()"></span>
+                                      </ng-template>
+                                  </p-cellEditor>
+                                </td>
+                                <td style="width: 16.7%;">
+                                  <button *ngIf="!editing" pButton pRipple type="button" class="p-button-rounded" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(product)" class="p-button-rounded p-button-text"></button>
+                                  <button *ngIf="!editing" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(order, product)"></button>
+                                  <button *ngIf="editing" pButton pRipple type="button" class="p-button-rounded" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(product)" class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                                  <button *ngIf="editing" pButton pRipple type="button" class="p-button-rounded" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(product, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="6">There are no order for this product yet.</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+  </p-table>
+  
